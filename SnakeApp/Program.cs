@@ -1,8 +1,12 @@
-﻿namespace SnakeGame
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace SnakeGame
 {
-    internal class Program
+    class Program
     {
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             Console.CursorVisible = false;
             SnakeGame game = new SnakeGame();
@@ -10,7 +14,7 @@
         }
     }
 
-    internal class SnakeGame
+    class SnakeGame
     {
         private int _width = 40;
         private int _height = 20;
@@ -31,7 +35,7 @@
                     //ChangeDirection(key);
                 }
                 DrawBoard();
-                MoveSnake();
+                //MoveSnake();
                 //CheckCollision();
                 Thread.Sleep(100);
             }
@@ -39,7 +43,6 @@
             Console.WriteLine("Game Over");
             Console.WriteLine($"Your score: {_score}");
         }
-
         private void InitializeGame()
         {
             _snake.Add(new Position(5, 5));
@@ -74,53 +77,15 @@
             }
             Console.WriteLine($"Score: {_score}");
         }
-
-        private void MoveSnake()
-        {
-            Position head = _snake[0];
-            Position newHead = head;
-
-            switch (_direction)
-            {
-                case Direction.Right:
-                    newHead = new Position(head.X, head.Y + 1);
-                    break;
-
-                case Direction.Left:
-                    newHead = new Position(head.X, head.Y - 1);
-                    break;
-
-                case Direction.Up:
-                    newHead = new Position(head.X - 1, head.Y);
-                    break;
-
-                case Direction.Down:
-                    newHead = new Position(head.X + 1, head.Y);
-                    break;
-            }
-
-            _snake.Insert(0, newHead);
-            if (newHead.Equals(_food))
-            {
-                _score++;
-                GenerateFood();
-            }
-            else
-            {
-                _snake.RemoveAt(_snake.Count - 1);
-            }
-        }
     }
-
-    internal enum Direction
+    enum Direction
     {
         Right,
         Left,
         Up,
         Down
     }
-
-    internal struct Position
+    struct Position
     {
         public int X;
         public int Y;
