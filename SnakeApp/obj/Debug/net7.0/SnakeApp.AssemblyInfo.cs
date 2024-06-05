@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SnakeApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f22558b1002ccca4c09f1003e675523ab704b61d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SnakeApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SnakeApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
