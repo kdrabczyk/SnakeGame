@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-
-namespace SnakeGame
+﻿namespace SnakeGame
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.CursorVisible = false;
             SnakeGame game = new SnakeGame();
@@ -14,7 +10,7 @@ namespace SnakeGame
         }
     }
 
-    class SnakeGame
+    internal class SnakeGame
     {
         private int _width = 40;
         private int _height = 20;
@@ -43,6 +39,7 @@ namespace SnakeGame
             Console.WriteLine("Game Over");
             Console.WriteLine($"Your score: {_score}");
         }
+
         private void InitializeGame()
         {
             _snake.Add(new Position(5, 5));
@@ -77,15 +74,79 @@ namespace SnakeGame
             }
             Console.WriteLine($"Score: {_score}");
         }
+
+        private void MoveSnake()
+        {
+            Position head = _snake[0];
+            Position newHead = head;
+
+            switch (_direction)
+            {
+                case Direction.Right:
+                    newHead = new Position(head.X, head.Y + 1);
+                    break;
+
+                case Direction.Left:
+                    newHead = new Position(head.X, head.Y - 1);
+                    break;
+
+                case Direction.Up:
+                    newHead = new Position(head.X - 1, head.Y);
+                    break;
+
+                case Direction.Down:
+                    newHead = new Position(head.X + 1, head.Y);
+                    break;
+            }
+
+            _snake.Insert(0, newHead);
+            if (newHead.Equals(_food))
+            {
+                _score++;
+                GenerateFood();
+            }
+            else
+            {
+                _snake.RemoveAt(_snake.Count - 1);
+            }
+        }
+
+        private void ChangeDirection(ConsoleKey key)
+        {
+            switch (key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (_direction != Direction.Right)
+                        _direction = Direction.Left;
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    if (_direction != Direction.Left)
+                        _direction = Direction.Right;
+                    break;
+
+                case ConsoleKey.UpArrow:
+                    if (_direction != Direction.Down)
+                        _direction = Direction.Up;
+                    break;
+
+                case ConsoleKey.DownArrow:
+                    if (_direction != Direction.Up)
+                        _direction = Direction.Down;
+                    break;
+            }
+        }
     }
-    enum Direction
+
+    internal enum Direction
     {
         Right,
         Left,
         Up,
         Down
     }
-    struct Position
+
+    internal struct Position
     {
         public int X;
         public int Y;
