@@ -28,11 +28,11 @@
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true).Key;
-                    //ChangeDirection(key);
+                    ChangeDirection(key);
                 }
                 DrawBoard();
-                //MoveSnake();
-                //CheckCollision();
+                MoveSnake();
+                CheckCollision();
                 Thread.Sleep(100);
             }
             Console.Clear();
@@ -43,7 +43,7 @@
         private void InitializeGame()
         {
             _snake.Add(new Position(5, 5));
-            //GenerateFood();
+            GenerateFood();
         }
 
         private void DrawBoard()
@@ -134,6 +134,21 @@
                     if (_direction != Direction.Up)
                         _direction = Direction.Down;
                     break;
+            }
+        }
+
+        private void GenerateFood()
+        {
+            Random rand = new Random();
+            _food = new Position(rand.Next(1, _height - 1), rand.Next(1, _width - 1));
+        }
+
+        private void CheckCollision()
+        {
+            Position head = _snake[0];
+            if (head.X <= 0 || head.X >= _height - 1 || head.Y <= 0 || head.Y >= _width - 1 || _snake.GetRange(1, _snake.Count - 1).Contains(head))
+            {
+                _gameOver = true;
             }
         }
     }
