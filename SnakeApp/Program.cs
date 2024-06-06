@@ -20,6 +20,7 @@
         private List<Position> _snake2 = new List<Position>();
         private Position _food;
         private Direction _direction = Direction.Right;
+        private Direction _direction2 = Direction.Left;
         private bool _gameOver = false;
 
         public void Run()
@@ -87,6 +88,7 @@
         private void MoveSnake()
         {
             MoveSingleSnake(_snake, _direction, ref _score);
+            MoveSingleSnake(_snake2, _direction2, ref _score2);
         }
 
         private void MoveSingleSnake(List<Position> snake, Direction direction, ref int score)
@@ -99,15 +101,12 @@
                 case Direction.Right:
                     newHead = new Position(head.X, head.Y + 1);
                     break;
-
                 case Direction.Left:
                     newHead = new Position(head.X, head.Y - 1);
                     break;
-
                 case Direction.Up:
                     newHead = new Position(head.X - 1, head.Y);
                     break;
-
                 case Direction.Down:
                     newHead = new Position(head.X + 1, head.Y);
                     break;
@@ -133,21 +132,36 @@
                     if (_direction != Direction.Right)
                         _direction = Direction.Left;
                     break;
-
                 case ConsoleKey.RightArrow:
                     if (_direction != Direction.Left)
                         _direction = Direction.Right;
                     break;
-
                 case ConsoleKey.UpArrow:
                     if (_direction != Direction.Down)
                         _direction = Direction.Up;
                     break;
-
                 case ConsoleKey.DownArrow:
                     if (_direction != Direction.Up)
                         _direction = Direction.Down;
                     break;
+                case ConsoleKey.A:
+                    if (_direction2 != Direction.Right)
+                        _direction2 = Direction.Left;
+                    break;
+                case ConsoleKey.D:
+                    if (_direction2 != Direction.Left)
+                        _direction2 = Direction.Right;
+                    break;
+                case ConsoleKey.W:
+                    if (_direction2 != Direction.Down)
+                        _direction2 = Direction.Up;
+                    break;
+                case ConsoleKey.S:
+                    if (_direction2 != Direction.Up)
+                        _direction2 = Direction.Down;
+                    break;
+
+
             }
         }
 
@@ -172,7 +186,7 @@
         }
     }
 
-    internal struct Position
+    struct Position
     {
         public int X;
         public int Y;
@@ -199,7 +213,7 @@
         }
     }
 
-    internal enum Direction
+    enum Direction
     {
         Right,
         Left,
