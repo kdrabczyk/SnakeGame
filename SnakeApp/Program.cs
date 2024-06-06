@@ -12,10 +12,12 @@
 
     internal class SnakeGame
     {
-        private int _width = 40;
-        private int _height = 20;
+        private int _width = 50;
+        private int _height = 25;
         private int _score = 0;
+        private int _score2 = 0;
         private List<Position> _snake = new List<Position>();
+        private List<Position> _snake2 = new List<Position>();
         private Position _food;
         private Direction _direction = Direction.Right;
         private bool _gameOver = false;
@@ -38,11 +40,13 @@
             Console.Clear();
             Console.WriteLine("Game Over");
             Console.WriteLine($"Your score: {_score}");
+            Console.WriteLine($"Your score 2: {_score2}");
         }
 
         private void InitializeGame()
         {
             _snake.Add(new Position(5, 5));
+            _snake2.Add(new Position(15, 15));
             GenerateFood();
         }
 
@@ -59,7 +63,11 @@
                     }
                     else if (_snake.Contains(new Position(i, j)))
                     {
-                        Console.Write("O");
+                        Console.Write("1");
+                    }
+                    else if (_snake2.Contains(new Position(i, j)))
+                    {
+                        Console.Write("2");
                     }
                     else if (_food.Equals(new Position(i, j)))
                     {
@@ -73,14 +81,20 @@
                 Console.WriteLine();
             }
             Console.WriteLine($"Score: {_score}");
+            Console.WriteLine($"Score 2: {_score2}");
         }
 
         private void MoveSnake()
         {
-            Position head = _snake[0];
+            MoveSingleSnake(_snake, _direction, ref _score);
+        }
+
+        private void MoveSingleSnake(List<Position> snake, Direction direction, ref int score)
+        {
+            Position head = snake[0];
             Position newHead = head;
 
-            switch (_direction)
+            switch (direction)
             {
                 case Direction.Right:
                     newHead = new Position(head.X, head.Y + 1);
@@ -99,15 +113,15 @@
                     break;
             }
 
-            _snake.Insert(0, newHead);
+            snake.Insert(0, newHead);
             if (newHead.Equals(_food))
             {
-                _score++;
+                score++;
                 GenerateFood();
             }
             else
             {
-                _snake.RemoveAt(_snake.Count - 1);
+                snake.RemoveAt(snake.Count - 1);
             }
         }
 
@@ -145,20 +159,17 @@
 
         private void CheckCollision()
         {
-            Position head = _snake[0];
-            if (head.X <= 0 || head.X >= _height - 1 || head.Y <= 0 || head.Y >= _width - 1 || _snake.GetRange(1, _snake.Count - 1).Contains(head))
+            CheckSingleCollision(_snake);
+        }
+
+        private void CheckSingleCollision(List<Position> snake)
+        {
+            Position head = snake[0];
+            if (head.X <= 0 || head.X >= _height - 1 || head.Y <= 0 || head.Y >= _width - 1 || snake.GetRange(1, snake.Count - 1).Contains(head))
             {
                 _gameOver = true;
             }
         }
-    }
-
-    internal enum Direction
-    {
-        Right,
-        Left,
-        Up,
-        Down
     }
 
     internal struct Position
@@ -186,5 +197,13 @@
         {
             return X.GetHashCode() ^ Y.GetHashCode();
         }
+    }
+
+    internal enum Direction
+    {
+        Right,
+        Left,
+        Up,
+        Down
     }
 }
