@@ -40,8 +40,8 @@
             }
             Console.Clear();
             Console.WriteLine("Game Over");
-            Console.WriteLine($"Your score: {_score}");
-            Console.WriteLine($"Your score 2: {_score2}");
+            Console.WriteLine($"Player1: {_score}");
+            Console.WriteLine($"Player2: {_score2}");
         }
 
         private void InitializeGame()
@@ -81,8 +81,8 @@
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"Score: {_score}");
-            Console.WriteLine($"Score 2: {_score2}");
+            Console.WriteLine($"Player1: {_score}");
+            Console.WriteLine($"Player2: {_score2}");
         }
 
         private void MoveSnake()
