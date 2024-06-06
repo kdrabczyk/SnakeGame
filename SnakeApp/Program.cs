@@ -36,7 +36,7 @@
                 DrawBoard();
                 MoveSnake();
                 CheckCollision();
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
             Console.Clear();
             Console.WriteLine("Game Over");
@@ -173,13 +173,16 @@
 
         private void CheckCollision()
         {
-            CheckSingleCollision(_snake);
+            CheckSingleCollision(_snake, _snake2);
+            CheckSingleCollision(_snake2, _snake);
+
         }
 
-        private void CheckSingleCollision(List<Position> snake)
+        private void CheckSingleCollision(List<Position> snake, List<Position> otherSnake)
         {
             Position head = snake[0];
-            if (head.X <= 0 || head.X >= _height - 1 || head.Y <= 0 || head.Y >= _width - 1 || snake.GetRange(1, snake.Count - 1).Contains(head))
+            if (head.X <= 0 || head.X >= _height - 1 || head.Y <= 0 || head.Y >= _width - 1 ||
+                snake.GetRange(1, snake.Count - 1).Contains(head) || otherSnake.Contains(head))
             {
                 _gameOver = true;
             }
